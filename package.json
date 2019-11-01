@@ -1,0 +1,30 @@
+{
+    "name": "mern",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "node src/index.js",
+        "dev": "nodemon src/index.js",
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/SolGee/MERN-PoC.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/SolGee/MERN-PoC/issues"
+    },
+    "homepage": "https://github.com/SolGee/MERN-PoC#readme",
+    "dependencies": {
+        "express": "^4.17.1",
+        "mongoose": "^5.7.7",
+        "morgan": "^1.9.1"
+    },
+    "devDependencies": {
+        "nodemon": "^1.19.4"
+    }
+}
