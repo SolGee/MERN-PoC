@@ -23,7 +23,7 @@ app.use('/api/tasks', require('./routes/task.routes'));
 
 //Le indicas a .static() que la carpeta public esta dentro de src. __dirname toma como ruta por default la ruta hasta src
 
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "..", 'public')));
 
 
 

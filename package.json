@@ -6,6 +6,7 @@
     "scripts": {
         "start": "node src/index.js",
         "dev": "nodemon src/index.js",
+        "build": "webpack --mode development",
         "test": "echo \"Error: no test specified\" && exit 1"
     },
     "repository": {
@@ -22,9 +23,18 @@
     "dependencies": {
         "express": "^4.17.1",
         "mongoose": "^5.7.7",
-        "morgan": "^1.9.1"
+        "morgan": "^1.9.1",
+        "react": "^16.11.0",
+        "react-dom": "^16.11.0"
     },
     "devDependencies": {
-        "nodemon": "^1.19.4"
+        "@babel/cli": "^7.6.4",
+        "@babel/core": "^7.6.4",
+        "@babel/preset-env": "^7.6.3",
+        "@babel/preset-react": "^7.6.3",
+        "babel-loader": "^8.0.6",
+        "nodemon": "^1.19.4",
+        "webpack": "^4.41.2",
+        "webpack-cli": "^3.3.10"
     }
 }
