@@ -22,7 +22,11 @@ class App extends Component {
             }
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data)
+            window.M.toast({html: 'Task Saved'});
+            this.setState({title: '', description: ''})
+        })
         .catch(err => console.error(err));
         e.preventDefault();
         
@@ -53,12 +57,12 @@ class App extends Component {
                             <form onSubmit={this.addTask}>
                                 <div className="row">
                                     <label className="input-field col s12">
-                                        <input name="title" onChange={this.handleChange} type="text" placeholder="Task title"/>
+                                        <input name="title" onChange={this.handleChange} type="text" placeholder="Task title" value={this.state.title}/>
                                     </label>
                                 </div>
                                 <div className="row">
                                     <label className="input-field col s12">
-                                        <textarea name="description" onChange={this.handleChange} className="materialize-textarea" type="text" placeholder="Task Description"></textarea>
+                                        <textarea name="description" onChange={this.handleChange} className="materialize-textarea" type="text" placeholder="Task Description" value={this.state.description}></textarea>
                                     </label>
                                 </div>
                                 <button type="submit" className="btn btn-light darken-4">
