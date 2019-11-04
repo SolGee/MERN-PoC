@@ -8,7 +8,9 @@ class App extends Component {
             title: '',
             description: '',
             //Aqui se guardan las tareas 
-            tasks: []
+            tasks: [],
+            //Se actualiza el id una vez que se edita el task
+            _id: ''
         }
         this.handleChange = this.handleChange.bind(this);
         this.addTask = this.addTask.bind(this);
@@ -16,24 +18,47 @@ class App extends Component {
 
     //CREATE - POST
     addTask(e){
-        fetch('./api/tasks', {
-            method: 'POST',
-            body: JSON.stringify(this.state),
-            headers: {
-                'Accept':'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data)
-            window.M.toast({html: 'Task Saved'});
-            //Limpiar el formulario
-            this.setState({title: '', description: ''})
-            //Imprime las tareas al momento después de enviarla al servidor 
-            this.fetchTask();
-        })
-        .catch(err => console.error(err));
+        //Compara si ya existe un id
+        if(this.state._id){
+            fetch(`/api/tasks/${this.state._id}`, {
+                method: 'PUT',
+                body: JSON.stringify(this.state),
+                headers: {
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                window.M.toast({html: 'Task Updated'});
+                this.setState({
+                    title: '',
+                    description: '',
+                    _id: ''
+                });
+                this.fetchTask()
+            });
+        } else {
+            fetch('./api/tasks', {
+                method: 'POST',
+                body: JSON.stringify(this.state),
+                headers: {
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data)
+                window.M.toast({html: 'Task Saved'});
+                //Limpiar el formulario
+                this.setState({title: '', description: ''})
+                //Imprime las tareas al momento después de enviarla al servidor 
+                this.fetchTask();
+            })
+            .catch(err => console.error(err));
+        }
         e.preventDefault();
         
     }
@@ -53,6 +78,27 @@ class App extends Component {
             console.log('soy tasks', this.state.tasks);
         })
         .catch(err => console.error(err));
+    }
+
+    //UPDATE
+
+    editTask(id){
+        fetch(`/api/tasks/${id}`)
+            .then(res => {
+                console.log('jalp', res);
+                return res.json()})
+            .then(data => {
+                console.log('Holiii');
+                console.log(data)
+                this.setState({
+                    title: data.title,
+                    description: data.description,
+                    _id: data._id
+                })
+            })
+            .catch(err => console.error(err));
+
+
     }
 
     //DELETE
@@ -125,7 +171,6 @@ class App extends Component {
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
                                 {
                                     this.state.tasks.map(task => {
                                         return(
@@ -133,10 +178,10 @@ class App extends Component {
                                                <td>{task.title}</td>
                                                <td>{task.description}</td>
                                                <td>
-                                                   <button className="btn btn-light darken-4">
+                                                   <button className="btn btn-light darken-4" onClick={() => this.editTask(task._id)}>
                                                         <i className="material-icons">edit</i>
                                                    </button>
-                                                   <button className="btn btn-light darken-4" style={{margin: '4px'}} onClick={() => {this.deleteTask(task._id)}}>
+                                                   <button className="btn btn-light darken-4" style={{margin: '4px'}} onClick={() => this.deleteTask(task._id)}>
                                                         <i className="material-icons">delete</i>
                                                    </button>
                                                </td>
@@ -144,7 +189,6 @@ class App extends Component {
                                         )
                                     })
                                 }
-                            </tr>
                         </tbody>
                     </table>
                 </article>

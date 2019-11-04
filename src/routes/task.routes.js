@@ -24,8 +24,12 @@ router.get('/', async(req, res) => {
 //READ A SINGLE TASK - STILL GET
 
 router.get('/:id', async(req, res) => {
-    const singleTask = await Task.findById(req.params.id);
-    res.json('Single Task', singleTask)
+    try {
+        const singleTask = await Task.findById(req.params.id);
+        res.status(200).json(singleTask)
+    } catch (e) {
+        console.error(e);
+    }
 })
 
 //UPDATE - PUT
