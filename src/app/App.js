@@ -58,20 +58,21 @@ class App extends Component {
     //DELETE
 
     deleteTask(id){
-        fetch(`/api/tasks/${id}`, {
-            method: 'DELETE',
-            headers: {
-                'Accept':'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-        .then(res => res.json())
-        .then(data => {
-            console.log(data);
-            window.M.toast({html: 'Task Deleted'});
-            this.fetchTask();
-        })
-
+        if(confirm('Are you sure you want to delete it?')){
+            fetch(`/api/tasks/${id}`, {
+                method: 'DELETE',
+                headers: {
+                    'Accept':'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                window.M.toast({html: 'Task Deleted'});
+                this.fetchTask();
+            })
+        }
     }
 
     handleChange(e){
