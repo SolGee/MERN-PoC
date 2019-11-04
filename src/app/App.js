@@ -6,12 +6,15 @@ class App extends Component {
         super();
         this.state = {
             title: '',
-            description: ''
+            description: '',
+            //Aqui se guardan las tareas 
+            tasks: []
         }
         this.handleChange = this.handleChange.bind(this);
         this.addTask = this.addTask.bind(this);
     }
 
+    //CREATE - POST
     addTask(e){
         fetch('./api/tasks', {
             method: 'POST',
@@ -25,11 +28,29 @@ class App extends Component {
         .then(data => {
             console.log(data)
             window.M.toast({html: 'Task Saved'});
+            //Limpiar el formulario
             this.setState({title: '', description: ''})
         })
         .catch(err => console.error(err));
         e.preventDefault();
         
+    }
+
+    componentDidMount(){
+       this.fetchTask(); 
+    }   
+    
+    //READ - GET
+    fetchTask(){
+        fetch('/api/tasks')
+        .then(res => res.json())
+        .then(data => {
+            console.log('soy data',data);
+            //Aquí indicas que se le reasignara a tasks como valor
+            this.setState({tasks: data});
+            console.log('soy tasks', this.state.tasks);
+        })
+        .catch(err => console.error(err));
     }
 
     handleChange(e){
@@ -74,7 +95,28 @@ class App extends Component {
                     </div>
                 </article>
                 <article className="col s7">
-                    
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Title:</th>
+                                <th>Description:</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                {
+                                    this.state.tasks.map(task => {
+                                        return(
+                                           <tr key={task._id}>
+                                               <td>{task.title}</td>
+                                               <td>{task.description}</td>
+                                           </tr> 
+                                        )
+                                    })
+                                }
+                            </tr>
+                        </tbody>
+                    </table>
                 </article>
 
             </section>
