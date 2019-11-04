@@ -55,6 +55,21 @@ class App extends Component {
         .catch(err => console.error(err));
     }
 
+    //DELETE
+
+    deleteTask(id){
+        fetch(`/api/tasks/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Accept':'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then(res => res.json())
+        .then(data => console.log(data))
+
+    }
+
     handleChange(e){
         const {name, value} = e.target;
         this.setState({
@@ -116,7 +131,7 @@ class App extends Component {
                                                    <button className="btn btn-light darken-4">
                                                         <i className="material-icons">edit</i>
                                                    </button>
-                                                   <button className="btn btn-light darken-4" style={{margin: '4px'}}>
+                                                   <button className="btn btn-light darken-4" style={{margin: '4px'}} onClick={() => {this.deleteTask(task._id)}}>
                                                         <i className="material-icons">delete</i>
                                                    </button>
                                                </td>
