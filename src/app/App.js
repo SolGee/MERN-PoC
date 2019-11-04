@@ -112,6 +112,14 @@ class App extends Component {
                                            <tr key={task._id}>
                                                <td>{task.title}</td>
                                                <td>{task.description}</td>
+                                               <td>
+                                                   <button className="btn btn-light darken-4">
+                                                        <i className="material-icons">edit</i>
+                                                   </button>
+                                                   <button className="btn btn-light darken-4" style={{margin: '4px'}}>
+                                                        <i className="material-icons">delete</i>
+                                                   </button>
+                                               </td>
                                            </tr> 
                                         )
                                     })
