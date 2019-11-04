@@ -30,6 +30,8 @@ class App extends Component {
             window.M.toast({html: 'Task Saved'});
             //Limpiar el formulario
             this.setState({title: '', description: ''})
+            //Imprime las tareas al momento después de enviarla al servidor 
+            this.fetchTask();
         })
         .catch(err => console.error(err));
         e.preventDefault();
