@@ -66,7 +66,11 @@ class App extends Component {
             }
         })
         .then(res => res.json())
-        .then(data => console.log(data))
+        .then(data => {
+            console.log(data);
+            window.M.toast({html: 'Task Deleted'});
+            this.fetchTask();
+        })
 
     }
 
